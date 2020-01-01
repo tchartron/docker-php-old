@@ -1,0 +1,43 @@
+version: '3'
+services:
+
+    php:
+        build:
+          context: ./
+          dockerfile: php.dockerfile
+        image: tardis.php
+        working_dir: /var/www
+        volumes:
+          - ./../web:/var/www
+        env_file:
+            - .env
+
+    web:
+        build:
+          context: ./
+          dockerfile: web.dockerfile
+        working_dir: /var/www
+        image: tardis.web
+        # volumes_from:
+        #   - app
+        volumes:
+          - ./../web:/var/www
+          - ./nginx/vhost.conf:/etc/nginx/conf.d/000-default.conf
+        ports:
+          - 8181:80
+
+    database:
+        build:
+          context: ./
+          dockerfile: mariadb.dockerfile
+        image: tardis.database
+        volumes:
+          - dbdata:/var/lib/mysql
+        env_file:
+            - .env
+        ports:
+            - "33061:3306"
+
+volumes:
+  dbdata:
+
