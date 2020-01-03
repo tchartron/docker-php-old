@@ -2,11 +2,11 @@ version: '3.7'
 
 services:
   php:
-    # image: tardis.php
+    # image: myimage.php
     build:
       context: ./
       dockerfile: php.dockerfile
-    container_name: spacehunt-php
+    container_name: app-php
     restart: unless-stopped
     tty: true
     ports:
@@ -18,14 +18,14 @@ services:
       - ./../:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - spacehunt-network
+      - app-network
 
   nginx:
     # image: nginx:stable-alpine
     build:
       context: ./
       dockerfile: nginx.dockerfile
-    container_name: spacehunt-nginx
+    container_name: app-nginx
     restart: unless-stopped
     tty: true
     ports:
@@ -40,14 +40,14 @@ services:
       - php
       - mysql
     networks:
-      - spacehunt-network
+      - app-network
 
   mysql:
-    # image: mysql:5.7.22
+    # image: mariadb:latest
     build:
       context: ./
       dockerfile: mariadb.dockerfile
-    container_name: spacehunt-mariadb
+    container_name: app-mariadb
     restart: unless-stopped
     tty: true
     volumes:
@@ -58,10 +58,10 @@ services:
     env_file:
       - .env
     networks:
-      - spacehunt-network
+      - app-network
 
 networks:
-  spacehunt-network:
+  app-network:
     driver: bridge
 volumes:
   dbdata:
