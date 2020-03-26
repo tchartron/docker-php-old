@@ -51,7 +51,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - dbdata:/var/lib/mysql
+      - ./dbdata:/var/lib/mysql
       # - ./mariadb/my.cnf:/etc/mysql/my.cnf #custom config
     ports:
       - "33061:3306"
