@@ -12,7 +12,7 @@ services:
     ports:
       - "9000:9000"
     env_file:
-      - .env
+      - .docker/.env
     working_dir: /var/www
     volumes:
       - .:/var/www
@@ -31,7 +31,7 @@ services:
     ports:
       - "8181:80"
     env_file:
-      - .env
+      - .docker/.env
     working_dir: /var/www
     volumes:
       - .:/var/www
@@ -56,7 +56,7 @@ services:
     ports:
       - "33061:3306"
     env_file:
-      - .env
+      - .docker/.env
     networks:
       - app-network
 
