@@ -6,7 +6,7 @@ mariadb latest
 nginx alpine stable  
 redis latest  
 
-### Php extensions  
+### Php Modules  
 ```
 docker-compose exec php php -m
 [PHP Modules]
