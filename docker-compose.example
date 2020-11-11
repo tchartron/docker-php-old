@@ -51,7 +51,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - .docker/dbdata:/var/lib/mysql
+      - .docker/app-dbdata:/var/lib/mysql
       # - ./mariadb/my.cnf:/etc/mysql/my.cnf #custom config
     ports:
       - "33061:3306"
@@ -60,9 +60,23 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:latest
+    container_name: app-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    volumes:
+      - .docker/app-redisdata/redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
-# volumes:
-#   dbdata:
-#     driver: local
+volumes:
+  app-dbdata:
+    driver: local
+  app-redisdata:
+    driver: local
