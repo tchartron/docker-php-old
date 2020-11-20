@@ -68,7 +68,7 @@ services:
     volumes:
       - .docker/app-redisdata/redis:/data
     ports:
-      - "6379:6379"
+      - "63791:6379"
     networks:
       - app-network
 
