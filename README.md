@@ -5,18 +5,19 @@ php7.4-fpm
 mariadb latest  
 nginx alpine stable  
 redis latest  
+elasticsearch 7.9.3  
+kibana 7.9.3  
 
-### Usage
+### Usage example
 ```
 git clone git@github.com:tchartron/docker-php.git
 cd docker-php
 cp -a .docker ../myproject/.docker
-cp .docker/docker-compose.example ../myproject/docker-compose.example
+cp .docker/docker-compose.yml ../myproject/docker-compose.yml
 cd ../myproject
 cp .docker/.env.example .docker/.env
-Edit hostname, mysql passwords, db name, .. 
-Edit /etc/hosts
-cp docker-compose.example docker-compose.yml
+Edit hostname, mysql passwords, db name... 
+Edit /etc/hosts to add your HOSTNAME
 Edit docker-compose.yml to change container names, ports if you want, volumes names for mariadb and redis, ...
 docker-compose up
 ```
