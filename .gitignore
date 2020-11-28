@@ -1,2 +1,4 @@
 .env
-docker-compose.yml
+/.docker/app-dbdata
+/.docker/app-redisdata
+/.docker/app-elasticsearch
