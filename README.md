@@ -5,10 +5,9 @@ php7.4-fpm
 mariadb latest  
 nginx alpine stable  
 redis latest  
-- Search engines
-elasticsearch 7.9.3  
-kibana 7.9.3  
-manticore latest  
+(elasticsearch 7.9.3 + kibana 7.9.3)  
+OR
+manticoresearch latest  
 
 ### Usage example
 ```
