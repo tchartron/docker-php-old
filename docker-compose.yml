@@ -76,40 +76,61 @@ services:
     networks:
       - app-network
 
-  elasticsearch:
-    image: elasticsearch:7.9.3
-    container_name: app-elasticsearch
-    environment:
-      - xpack.security.enabled=false
-      - discovery.type=single-node
-    env_file:
-      - .docker/.env
+  # elasticsearch:
+  #   image: elasticsearch:7.9.3
+  #   container_name: app-elasticsearch
+  #   environment:
+  #     - xpack.security.enabled=false
+  #     - discovery.type=single-node
+  #   env_file:
+  #     - .docker/.env
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #     nofile:
+  #       soft: 10000
+  #       hard: 10000
+  #   cap_add:
+  #     - IPC_LOCK
+  #   volumes:
+  #     - .docker/app-elasticsearch:/usr/share/elasticsearch/data
+  #   ports:
+  #     - "9200:9200"
+  #     - "9300:9300"
+  #   networks:
+  #     - app-network
+
+  # kibana:
+  #   image: kibana:7.9.3
+  #   container_name: app-elasticsearch
+  #   env_file:
+  #     - .docker/.env
+  #   ports:
+  #     - 5601:5601
+  #   depends_on:
+  #     - elasticsearch
+  #   networks:
+  #     - app-network
+
+  manticore:
+    image: manticoresearch/manticore:latest
+    container_name: app-manticore
+    restart: always
+    ports:
+      - 9306:9306
+      - 9308:9308
     ulimits:
+      nproc: 10000
+      nofile:
+         soft: 10000
+         hard: 10000
       memlock:
         soft: -1
         hard: -1
-      nofile:
-        soft: 10000
-        hard: 10000
-    cap_add:
-      - IPC_LOCK
     volumes:
-      - .docker/app-elasticsearch:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    networks:
-      - app-network
-
-  kibana:
-    image: kibana:7.9.3
-    container_name: app-elasticsearch
-    env_file:
-      - .docker/.env
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
+      - .docker/app-manticore:/var/lib/manticore
+#      - ./manticore.conf:/etc/manticoresearch/manticore.conf # uncommment if you use a custom config
     networks:
       - app-network
 
@@ -121,5 +142,7 @@ volumes:
     driver: local
   app-redisdata:
     driver: local
-  app-elasticsearch:
+  # app-elasticsearch:
+  #   driver: local
+  app-manticore:
     driver: local
