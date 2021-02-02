@@ -9,7 +9,7 @@ FROM php:7.4-fpm
 # RUN docker-php-ext-install calendar gd pdo pdo_mysql mysqli intl soap zip
 
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y curl libssl-dev libonig-dev libxml2-dev libzip-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev
+RUN apt-get install -y curl libssl-dev libonig-dev libxml2-dev libzip-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev wget
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -26,6 +26,16 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN pecl install -o -f redis \
 &&  rm -rf /tmp/pear \
 &&  docker-php-ext-enable redis
+
+#Mailhog (mhsendmail binary)
+ARG GO_VERSION=1.15.7
+RUN wget https://golang.org/dl/go$GO_VERSION.linux-amd64.tar.gz && tar -C /usr/local -xzf go$GO_VERSION.linux-amd64.tar.gz
+ENV GOROOT=/usr/local/go
+ENV GOPATH=/usr/local
+ENV PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+RUN rm go$GO_VERSION.linux-amd64.tar.gz
+RUN go get github.com/mailhog/mhsendmail
+
 
 # COPY . /var/www
 # RUN chown -R www-data:www-data \

@@ -76,6 +76,16 @@ services:
     networks:
       - app-network
 
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: app-mailhog
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+    networks:
+      - web
+
+
   # elasticsearch:
   #   image: elasticsearch:7.9.3
   #   container_name: app-elasticsearch
